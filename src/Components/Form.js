@@ -22,17 +22,27 @@ export default function Form() {
     }
 
     const addTodo = e => {
+        // on prévoit d'éviter la mise à jour du formulaire avec cette méthode
         e.preventDefault();
+
+        // on évite de modifier le tableau du state initial
+        // on va préférer créer un nouveau tableau grace au spread operator
         const newArr = [...dataArr];
 
+        // on crée ensuite un nouvel objet qui va accueillir les nouvelles propritétés 
         const newTodo = {};
         newTodo.txt = stateInput;
         newTodo.id = uuidv4();
 
+        // on push les modifs de ce nouvel objet dans le nouveau tableau
         newArr.push(newTodo);
         setDataArr(newArr);
+
+        // on remet à zéro le contenu ou le state de notre input
+        setStateInput('');
     }
 
+    // on va lier notre input au nouveau state généré plus tard lors d'un event
     const linkedInput = e => {
         setStateInput(e);
 
@@ -45,7 +55,8 @@ export default function Form() {
             <form onSubmit={e => addTodo(e)} className="mb-3">
                 <label htmlFor="todo" 
                 className="form-label mt-3">Choses à faire</label>
-                <input 
+                <input
+                value={stateInput} 
                 onInput={e => linkedInput(e.target.value)}
                 type="text" 
                 className="form-control" 
