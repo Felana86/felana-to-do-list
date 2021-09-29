@@ -1,14 +1,23 @@
 import {useState} from 'react';
 import Item from './Item';
+import {v4 as uuidv4} from 'uuid';
 
 
 export default function Form() {
 
     const [dataArr, setDataArr] = useState([
-        {txt: "Faire les courses"},
-        {txt: "Continuer à apprendre React"},
-        {txt: "Postuler"}
+        {txt: "Faire les courses", id: uuidv4()},
+        {txt: "Continuer à apprendre React", id: uuidv4()},
+        {txt: "Postuler", id: uuidv4()}
     ])
+    
+    const deleteElement = id => {
+        //console.log(id);
+        const filteredState = dataArr.filter(item => {
+            return item.id != id;
+        })
+        setDataArr(filteredState);
+    }
 
     return (
         
@@ -25,11 +34,13 @@ export default function Form() {
 
             <h2>Liste des choses à faire : </h2>
             <ul className="list-group">
-                {dataArr.map((item, index) => {
+                {dataArr.map((item) => {
                     return (
                         <Item 
                         txt={item.txt}
-                        key={index}
+                        key={item.id}
+                        id={item.id}
+                        delFunc={deleteElement}
                         />
                     )
                 })}
