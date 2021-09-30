@@ -16,7 +16,7 @@ export default function Form() {
     const deleteElement = id => {
         //console.log(id);
         const filteredState = dataArr.filter(item => {
-            return item.id != id;
+            return item.id !== id;
         })
         setDataArr(filteredState);
     }
